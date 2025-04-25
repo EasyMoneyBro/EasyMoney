@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyMoney</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Nowoczesny font */
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; /* Ciemne tło */
+            color: #cccccc; /* Jasnoszary tekst główny */
+        }
+
+        header {
+            background-color: #000000; /* Czarne tło nagłówka */
+            color: white;
+            padding: 1.5em 0; /* Większy padding */
+            text-align: center;
+            border-bottom: 2px solid #FFD700; /* Złota linia pod nagłówkiem */
+        }
+
+        header h1 {
+            margin: 0; /* Usunięcie domyślnego marginesu nagłówka */
+            color: #FFD700; /* Złoty kolor nagłówka */
+            font-size: 2.5em; /* Większa czcionka nagłówka */
+            text-transform: uppercase; /* Duże litery */
+            letter-spacing: 2px; /* Rozstrzelone litery */
+        }
+
+
+        nav {
+            background-color: #000000; /* Czarne tło nawigacji */
+            color: white;
+            padding: 0.8em 0; /* Większy padding */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5); /* Delikatny cień */
+            position: sticky; /* Menu przyklejone do góry */
+            top: 0;
+            z-index: 100; /* Upewnij się, że menu jest na wierzchu */
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav li {
+            position: relative;
+            margin: 0 20px; /* Większe odstępy między elementami */
+        }
+
+        nav a {
+            color: #cccccc; /* Jasnoszary tekst menu */
+            text-decoration: none;
+            padding: 0.8em 1em;
+            display: block;
+            transition: color 0.3s ease; /* Płynna zmiana koloru */
+        }
+
+        nav a:hover {
+            color: #FFD700; /* Złoty kolor przy najechaniu */
+            background-color: #333333; /* Ciemniejsze tło przy najechaniu */
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #282828; /* Ciemnoszare tło dropdown */
+            min-width: 200px; /* Większa minimalna szerokość */
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+            z-index: 10; /* Wyższy z-index, aby było nad innymi elementami */
+            top: 100%;
+            left: 0;
+            border-top: 2px solid #FFD700; /* Złota linia na górze dropdown */
+        }
+
+        .dropdown-content a {
+            color: #cccccc; /* Jasnoszary tekst dropdown */
+            padding: 12px 18px; /* Większy padding w dropdown */
+            text-decoration: none;
+            display: block;
+            white-space: nowrap;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #3a3a3a; /* Ciemniejsze tło przy najechaniu */
+            color: #FFD700; /* Złoty kolor tekstu */
+        }
+
+        nav li:hover .dropdown-content {
+            display: block;
+        }
+
+        main {
+            padding: 2em 1em; /* Większy padding na górze i na dole */
+            min-height: calc(100vh - 150px); /* Dostosowany min-height */
+            padding-bottom: 80px; /* Większy padding na dole */
+        }
+
+        footer {
+            background-color: #000000; /* Czarne tło stopki */
+            color: #cccccc; /* Jasnoszary tekst stopki */
+            text-align: center;
+            padding: 1.5em 0; /* Większy padding */
+            position: relative;
+            width: 100%;
+            margin-top: 40px; /* Większy odstęp od treści */
+        }
+
+        /* Klasa dla wszystkich sekcji treści, które będą ukrywane/pokazywane */
+        .content-section {
+             display: none;
+             margin-top: 30px; /* Większy odstęp */
+             background-color: #282828; /* Ciemnoszare tło sekcji */
+             padding: 30px; /* Większy padding */
+             box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Wyraźniejszy cień */
+             border-radius: 8px; /* Zaokrąglone rogi sekcji */
+             max-width: 900px; /* Nieco większa maksymalna szerokość */
+             margin-left: auto;
+             margin-right: auto; /* Centrowanie sekcji */
+             color: #cccccc; /* Tekst w sekcji jasnoszary */
+        }
+
+         #welcome-section {
+            text-align: center;
+            padding: 40px 20px; /* Większy padding */
+            background-color: #282828; /* Ciemnoszare tło */
+             border-radius: 8px;
+             max-width: 900px;
+             margin: 30px auto 20px auto; /* Marginesy */
+             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+         }
+         #welcome-section h2 {
+             color: #FFD700; /* Złoty nagłówek */
+             margin-bottom: 15px;
+         }
+          #welcome-section p {
+             font-size: 1.1em;
+             line-height: 1.6;
+          }
+
+
+        .offers-section h3 {
+            color: #FFD700; /* Złoty nagłówek sekcji ofert */
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8em;
+            border-bottom: 1px solid #3a3a3a; /* Ciemniejsza linia pod nagłówkiem */
+            padding-bottom: 10px;
+        }
+
+
+        .offer {
+            border: 1px solid #3a3a3a; /* Ciemniejsza ramka */
+            padding: 15px; /* Większy padding */
+            margin-bottom: 15px; /* Większy odstęp */
+            display: flex;
+            flex-direction: column; /* Elementy układane kolumnowo */
+            align-items: flex-start; /* Wyrównanie do lewej */
+            background-color: #333333; /* Ciemniejsze tło dla każdej oferty */
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Delikatny cień dla oferty */
+        }
+
+        .offer-description {
+            flex-grow: 1;
+            margin-right: 0; /* Usunięto prawy margines */
+            margin-bottom: 15px; /* Dodano dolny margines, żeby oddzielić od przycisku */
+        }
+
+         .offer-description h4 {
+             margin-top: 0;
+             margin-bottom: 8px; /* Większy odstęp */
+             color: #FFD700; /* Złoty kolor banku/firmy */
+             font-size: 1.3em;
+         }
+
+         .offer-description p {
+             margin-top: 0;
+             margin-bottom: 5px;
+             line-height: 1.6; /* Lepszy odstęp między liniami */
+             color: #cccccc; /* Jasnoszary tekst opisu */
+             font-size: 1em;
+         }
+
+
+        .offer button {
+            background-color: #FFD700; /* Złote tło przycisku */
+            color: #1a1a1a; /* Ciemny tekst przycisku */
+            padding: 10px 15px; /* Większy padding */
+            border: none;
+            cursor: pointer;
+            flex-shrink: 0;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, opacity 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            align-self: center; /* Centruje przycisk w kolumnie */
+        }
+
+        .offer button:hover {
+            background-color: #e6c300; /* Ciemniejszy złoty przy najechaniu */
+            opacity: 0.9;
+        }
+
+        .more-info-link {
+            display: inline-block;
+            margin-top: 8px; /* Większy odstęp */
+            font-size: 0.95em;
+            color: #FFD700; /* Złoty kolor linku */
+            text-decoration: underline;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+         .more-info-link:hover {
+            text-decoration: none;
+            color: #ffff00; /* Jaśniejszy złoty/żółty przy najechaniu */
+         }
+
+        /* Style dla pełnych opisów i sekcji "O nas" */
+        .full-details-section h2,
+        #about-us-section h2,
+         #contact-section h2 {
+            color: #FFD700; /* Złote nagłówki sekcji */
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #3a3a3a; /* Ciemniejsza linia */
+            padding-bottom: 5px;
+             font-size: 1.8em;
+        }
+         .full-details-section p,
+         #about-us-section p,
+         #contact-section p {
+             margin-bottom: 15px;
+             line-height: 1.7; /* Lepszy odstęp */
+             color: #cccccc; /* Jasnoszary tekst */
+        }
+        .full-details-section strong {
+            color: #ffff00; /* Jaśniejszy żółty dla ważnych informacji */
+        }
+         .back-to-offers {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px; /* Większy padding */
+            background-color: #3a3a3a; /* Ciemnoszare tło przycisku */
+            color: #cccccc; /* Jasnoszary tekst przycisku */
+            text-decoration: none;
+            border-radius: 5px;
+             transition: background-color 0.3s ease, color 0.3s ease;
+             cursor: pointer;
+             font-size: 0.9em;
+             text-transform: uppercase;
+             border: 1px solid #555; /* Delikatna ramka */
+        }
+         .back-to-offers:hover {
+             background-color: #5a6268; /* Ciemniejszy szary */
+             color: white;
+         }
+
+
+        .image-container {
+            text-align: center;
+            margin-top: 40px; /* Większy odstęp */
+            margin-bottom: 40px;
+        }
+         .image-container img {
+             border: 2px solid #FFD700; /* Złota ramka wokół obrazu */
+             box-shadow: 0 5px 15px rgba(0,0,0,0.5); /* Cień obrazu */
+             border-radius: 8px; /* Zaokrąglone rogi obrazu */
+         }
+
+
+        /* Prosta responsywność dla menu */
+        @media (max-width: 768px) { /* Zmieniono breakpoint */
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav li {
+                margin: 0.3em 0; /* Mniejsze odstępy */
+            }
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                min-width: auto;
+                border-top: none; /* Usunięcie górnej ramki na mobile */
+            }
+            nav li:hover .dropdown-content {
+                 /* To wymaga JavaScript, żeby działało na kliknięcie na mobile */
+                 /* display: none; */ /* Usunięto, żeby nie kolidowało z ewentualnym JS */
+            }
+             /* Resetowanie stylów flex dla oferty na małych ekranach */
+            .offer {
+                 flex-direction: column; /* Na małych ekranach układ kolumnowy */
+                 align-items: flex-start; /* Wyrównanie do lewej na małych ekranach */
+            }
+            .offer-description {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+             .offer button {
+                align-self: center; /* Centruje przycisk */
+             }
+
+
+             /* Sekcje treści na małych ekranach bez centrowania max-width */
+             .content-section, #welcome-section {
+                 max-width: 100%;
+                 padding: 15px; /* Nieco większy padding na mobile */
+                 margin: 15px auto; /* Mniejszy margines */
+             }
+             header h1 {
+                 font-size: 2em; /* Mniejszy nagłówek na mobile */
+             }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>EasyMoney</h1> </header>
+
+    <nav>
+        <ul>
+            <li class="dropdown">
+                <a href="#">Kredyty</a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showContent('kredyt-gotówkowy-offers'); return false;">Kredyt gotówkowy</a>
+                    <a href="#" onclick="showContent('kredyt-konsolidacyjny-offers'); return false;">Kredyt konsolidacyjny</a>
+                    <a href="#" onclick="showContent('kredyt-hipoteczny-offers'); return false;">Kredyt hipoteczny</a>
+                    <a href="#" onclick="showContent('kredyty-samochodowe-offers'); return false;">Kredyty samochodowe</a>
+                    <a href="#" onclick="showContent('chwilowki-offers'); return false;">Chwilówki</a>
+                    <a href="#" onclick="showContent('pozyczki-offers'); return false;">Pożyczki</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#">Konta i Karty</a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showContent('konta-osobiste-offers'); return false;">Konta osobiste</a>
+                    <a href="#" onclick="showContent('karty-kredytowe-offers'); return false;">Karty kredytowe</a>
+                </div>
+            </li>
+            <li><a href="#" onclick="showContent('about-us-section'); return false;">O nas</a></li>
+            <li><a href="#" onclick="showContent('contact-section'); return false;">Kontakt</a></li> </ul>
+    </nav>
+
+    <main>
+        <section class="content-section" id="welcome-section" style="display: block;">
+            <h2>Witaj w EasyMoney!</h2> <p>Oferujemy szeroki zakres usług bankowych, dopasowanych do Twoich potrzeb. Wybierz kategorię z menu powyżej, aby zobaczyć szczegółowe oferty.</p>
+             </section>
+
+
+        <section class="content-section offers-section" id="kredyt-gotówkowy-offers">
+            <h3>Oferty Kredytów Gotówkowych</h3>
+            <div class="offer">
+                <div class="offer-description">
+                    <h4>PKO BP</h4>
+                    <p>Pożyczka gotówkowa 0% prowizji, Umowę do 7700 zł podpiszesz online, Nie musisz mieć konta w PKO Banku Polskim, RRSO 11,57%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_1851', '_blank')">Sprawdź</button>
+            </div>
+            <div class="offer">
+                 <div class="offer-description">
+                     <h4>Alior Bank</h4>
+                    <p>Weź pożyczkę przez telefon. Gdziekolwiek jesteś., 0% prowizji, Kwota do 250 tys. zł, Dla nowych klientów, z tej oferty można skorzystać 1 raz, RRSO 10,36%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2139', '_blank')">Sprawdź</button>
+            </div>
+             <div class="offer">
+                 <div class="offer-description">
+                     <h4>Bank Pekao</h4>
+                    <p>Pożyczka na dowolny cel, Pieniądze nawet w 1 dzień od podpisania umowy, RRSO 10,29%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2053', '_blank')">Sprawdź</button>
+            </div>
+            <div class="offer">
+                 <div class="offer-description">
+                     <h4>Kasa Stefczyka</h4>
+                    <p>0 zł prowizji, Wygodna rata, Okres kredytowania od 12 miesięcy do 120 miesięcy, RRSO 11,47%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_740', '_blank')">Sprawdź</button>
+            </div>
+        </section>
+
+        <section class="content-section offers-section" id="kredyt-konsolidacyjny-offers">
+             <h3>Oferty Kredytów Konsolidacyjnych</h3>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>Alior Bank</h4>
+                    <p>Konsolidacja Internetowa - Połącz kredyty i dobierz gotówkę na dowolny cel, 0% prowizji, Kwota do 250 tys. zł, Dla nowych klientów, Z tej oferty można skorzystać 1 raz, RRSO 10,36%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2476', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                 <div class="offer-description">
+                    <h4>PKO BP</h4>
+                    <p>Pożyczka konsolidacyjna - Masz możliwość otrzymania dodatkowej gotówki na ekstra wydatki, Spłata od 2 do 120 miesięcy, Możesz przenieść nawet jedną ratę, RRSO 12,57%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_331', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                  <div class="offer-description">
+                     <h4>BNP Paribas</h4>
+                     <p>Kredyt konsolidacyjny - Weź Pierwszą Pożyczkę z opcją konsolidacji, jedna rata zamiast wielu, od 1000 zł do 230 000 zł, 0% prowizji, RRSO 10,23%</p>
+                 </div>
+                 <button onclick="window.open('https://tmlead.pl/redirect/838557_2047', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                 <div class="offer-description">
+                     <h4>Bank Pekao SA</h4>
+                     <p>Konsolidacja - Sprawdź, o ile mniej możesz płacić!, Przenieś swoje raty do Pekao, 0% prowizji, RRSO 11,55%</p>
+                 </div>
+                 <button onclick="window.open('https://tmlead.pl/redirect/838557_2184', '_blank')">Sprawdź</button>
+             </div>
+        </section>
+
+        <section class="content-section offers-section" id="kredyt-hipoteczny-offers">
+            <h3>Oferty Kredytów Hipotecznych</h3>
+            <div class="offer">
+                <div class="offer-description">
+                    <h4>Citi Handlowy</h4>
+                    <p>Kredyt hipoteczny - Twój nowy dom jest bliżej niż myślisz! Kredyt hipoteczny na atrakcyjnych warunkach. RRSO 8,02%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2204', '_blank')">Sprawdź</button>
+            </div>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>Bank Pekao SA</h4>
+                    <p>Kredyt hipoteczny w Banku Pekao: nawet 0% prowizji, od 1,79% marży, do 90% wartości nieruchomości, stała lub zmienna stopa procentowa</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2160', '_blank')">Sprawdź</button>
+            </div>
+        </section>
+
+         <section class="content-section offers-section" id="kredyty-samochodowe-offers">
+            <h3>Oferty Kredytów Samochodowych</h3>
+            <p>Przepraszamy, obecnie brak ofert kredytów samochodowych. Prosimy sprawdzić później.</p>
+             </section>
+
+        <section class="content-section offers-section" id="chwilowki-offers">
+            <h3>Oferty Chwilówek</h3>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>Wonga</h4>
+                    <p>Wonga oferuje szybkie pożyczki online: chwilówki (od 50 zł do 1500 zł, do 60 dni) i pożyczki ratalne (do 20 000 zł, do 60 miesięcy). Pierwsza chwilówka dla nowych klientów ma stały koszt. Sprawdza BIK i BIG. Wszystkie formalności online.</p>
+                    <span class="more-info-link" onclick="showContent('wonga-full-details');">Dowiedz się więcej</span>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2471', '_blank')">Sprawdź</button>
+            </div>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>Crezu</h4>
+                    <p>Pożyczki od 100 zł do 5000 zł na 0%, Dowolna historia kredytowa, Bez prowizji.</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2478', '_blank')">Sprawdź</button>
+            </div>
+            <div class="offer">
+                <div class="offer-description">
+                    <h4>Credityes</h4>
+                    <p>Szybka pożyczka online do 10 000 zł, RRSO nawet od 0,01% dla nowych Klientów, Decyzja nawet w 15 minut.</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2754', '_blank')">Sprawdź</button>
+            </div>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>Vivigo (dawniej Vivus)</h4>
+                    <p>Pierwsza pożyczka do 4000 zł dla obywateli innych krajów, Do złożenia wniosku potrzebne są paszport, pesel, numer telefonu komórkowego i osobiste konto w polskim banku, 61 dni na spłatę, RRSO 0%.</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2737', '_blank')">Sprawdź</button>
+            </div>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>Halvo</h4>
+                    <p>Halvo to dodatkowe środki finansowe na Twoje potrzeby. Limit kredytowy dla nowych klientów bez prowizji i odsetek przez pierwsze 30 dni, a także minimum formalności i pełna swoboda korzystania.</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2728', '_blank')">Sprawdź</button>
+            </div>
+        </section>
+
+        <section class="content-section offers-section" id="pozyczki-offers">
+             <h3>Oferty Pożyczek</h3>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>Provident</h4>
+                    <p>Z nową pożyczką bezProvizji zawsze bezStresu! Dla nowych i obecnych klientów, Od 1000 do 30 000 zł, RRSO 29,01%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2568', '_blank')">Sprawdź</button>
+             </div>
+            <div class="offer">
+                <div class="offer-description">
+                    <h4>Funeda</h4>
+                    <p>Szybka pożyczka online w 15 minut, Pożycz nawet do 100 000 złotych na 120 rat, RRSO 24,12%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2811', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>Wonga (Pożyczka na raty)</h4>
+                    <p>Pożyczka online na raty, do 15000 zł, z okresem spłaty do 48 miesięcy, RRSO 54,19%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2084', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>Smartney</h4>
+                    <p>Pożyczka pozabankowa online, szybki i prosty proces wnioskowania, wysoka kwota maksymalna. Członek Związku Przedsiębiorstw Finansowych.</p>
+                     <span class="more-info-link" onclick="showContent('smartney-full-details');">Dowiedz się więcej</span>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_1964', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                 <div class="offer-description">
+                    <h4>ProFimo</h4>
+                    <p>Pożyczka ratalna - Wybierz kwotę i termin spłaty, Wypełnij prosty wniosek oraz dokonaj weryfikacji, Oczekuj przelewu.</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2209', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                 <div class="offer-description">
+                    <h4>Profi Credit</h4>
+                    <p>Pożyczka online lub przez telefon, Minimum formalności.</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2211', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                 <div class="offer-description">
+                    <h4>Fanko</h4>
+                    <p>Do 15 000 zł, Pożyczka Online na wyciągnięcie ręki!, RRSO 57,62%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2483', '_blank')">Sprawdź</button>
+             </div>
+        </section>
+
+         <section class="content-section offers-section" id="konta-osobiste-offers">
+            <h3>Oferty Kont Osobistych</h3>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>PKO BP (Konto za Zero)</h4>
+                    <p>PKO Konto za Zero w kumulacji promocji z bonusem do 1150 zł. Kumulacja! Łącz promocje i zyskaj jeszcze więcej! Kod rabatowy 200 zł do sklepu Samsung, Bonus do 500 zł za konto z kartą z kodem BONUS2, Bonus do 250 zł za konto dla dziecka z kartą.</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2884', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>Alior Bank</h4>
+                    <p>Alior Konto za zero - Nie płać za to, za co nie musisz! Otwórz nowe Alior Konto i ciesz się kontem za 0 zł za prowadzenie - bez warunków. Dodatkowo w promocji bonus nawet 600 zł za aktywne korzystanie z Alior Konta. Punkty powitalne w programie Bezcenne Chwile (karta podarunkowa Allegro nawet 200 zł) oraz 7% na lokacie na start (do 30 tys. zł, na 90 dni).</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2861', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                <div class="offer-description">
+                     <h4>Bank Millennium</h4>
+                    <p>Konto Millennium 360° do 25 lat - Nawet 650 zł na plusie z kontem Millennium 360°. Otwórz konto, spełnij warunki promocji i zgarnij premię! Dodatkowo promocyjne oprocentowanie do 6,25% w skali roku przez 91 dni dla nowych środków na Koncie Oszczędnościowym Profit.</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2859', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                 <div class="offer-description">
+                     <h4>PKO BP (Konto dla Młodych)</h4>
+                    <p>PKO Konto dla Młodych w promocji "Bonus dla Ciebie" ze zwrotem do 250 zł. Z Kontem dla Młodych zyskujesz 0 zł za prowadzenie konta i wypłaty z bankomatów w Polsce i za granicą. Dodatkowo otwórz konto z kodem BONUS2 i przygotuj się na zwrot do 250 zł za płatności kartą Visa w promocji. Promocja trwa do 30 czerwca 2025 r. lub do wcześniejszego wyczerpania puli nagród.</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2849', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                 <div class="offer-description">
+                     <h4>mBank</h4>
+                    <p>eKonto dla młodych w wybranym wariancie od 13 do 24 lat - Załóż darmowe konto i ogarniaj, co chcesz! Dodatkowo zyskaj atrakcyjną premię. Konto w wariancie 13-17 lat lub 18-24 lat.</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2777', '_blank')">Sprawdź</button>
+             </div>
+        </section>
+
+         <section class="content-section offers-section" id="karty-kredytowe-offers">
+            <h3>Oferty Kart Kredytowych</h3>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>Citi Handlowy (Simplicity)</h4>
+                    <p>Karta kredytowa Simplicity w promocji z Biedronką - Nawet 600 zł do Biedronki. Rabaty u 300 partnerów, nagrody i niezliczone niespodzianki. Wszystko z jedną kartą kredytową. RRSO 26,28%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2858', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                <div class="offer-description">
+                    <h4>ByCard</h4>
+                    <p>Wirtualna karta kredytowa - Twoja karta kredytowa. Pierwsze 30 dni korzystania z limitu kredytowego bez prowizji i odsetek dla nowych klientów. RRSO 43,73%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2463', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                 <div class="offer-description">
+                    <h4>BNP Paribas</h4>
+                    <p>Karta kredytowa w promocji z nagrodami o wartości do 500 zł. Załóż kartę kredytową Mastercard® Standard i zyskaj nawet do 500 zł, w tym do 300 zł w e-kodach do Allegro. RRSO 26,85%</p>
+                 </div>
+                 <button onclick="window.open('https://tmlead.pl/redirect/838557_2457', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                 <div class="offer-description">
+                    <h4>Bank Pekao SA</h4>
+                    <p>Karta kredytowa z Żubrem - 0 zł za kartę w pakiecie Standard. 3 pakiety: Korzyści rosną wraz z wyborem wyższego pakietu. Raty 0%: Zakupy rozłożysz na 10 rat 0%. Kupuj teraz, płać później! RRSO 18,74%</p>
+                 </div>
+                 <button onclick="window.open('https://tmlead.pl/redirect/838557_2404', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                <div class="offer-description">
+                     <h4>Citi Handlowy (BP Motokarta)</h4>
+                    <p>Karta kredytowa BP Motokarta - Karta zatankowana nagrodami po sam korek! Brak opłaty rocznej za kartę. RRSO 20,15%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2163', '_blank')">Sprawdź</button>
+             </div>
+             <div class="offer">
+                <div class="offer-description">
+                     <h4>AXI Card</h4>
+                    <p>Karta kredytowa - Karta zbliżeniowa MasterCard z limitem kredytowym. Złożenie wniosku poprzez formularz online. Szybki przelew 60% limitu w ciągu 15 minut u Ciebie. RRSO 99,8%</p>
+                </div>
+                <button onclick="window.open('https://tmlead.pl/redirect/838557_2832', '_blank')">Sprawdź</button>
+             </div>
+        </section>
+
+
+        <section class="content-section full-details-section" id="wonga-full-details">
+             <span class="back-to-offers" onclick="showContent('chwilowki-offers');">← Powrót do ofert chwilówek</span>
+
+             <h2>Wonga - Szczegółowy opis oferty</h2>
+
+             <h2>O firmie Wonga</h2>
+            <p>Wonga jest znaną firmą pożyczkową, o <strong>ugruntowanej pozycji na polskim rynku pozabankowym</strong>. Oferuje szybkie pożyczki online. Wonga ma w ofercie jednak coś więcej niż tylko chwilówki, ponieważ jest gotowa udzielić też <strong>pożyczek ratalnych na 60 miesięcy</strong>, co powoduje, że jej oferta staje się realną konkurencją dla kredytów bankowych.</p>
+            <p>Firma Wonga to spółka z ograniczoną odpowiedzialnością z siedzibą w Warszawie, zarejestrowana w Rejestrze Przedsiębiorców Krajowego Rejestru Sądowego prowadzonego przez Sąd Rejonowy dla m. st. Warszawy w Warszawie.</p>
+            <p>Marka Wonga jest własnością brytyjskiego przedsiębiorstwa, które oferuje pożyczki krótkoterminowe. Pierwsza strona Wonga.com powstała w 2007 roku w Wielkiej Brytanii. <strong>W Polsce Wonga rozpoczęła działalność w kwietniu 2013 roku</strong> i od początku firma ta celowała w segment mikropożyczek. Z czasem jednak poszerzyła swoją ofertę pożyczkową o zobowiązania ratalne.</p>
+
+            <h2>Pożyczki online w Wonga</h2>
+            <p>Wonga.pl pozwala na zaciąganie <strong>pożyczek chwilówek i pożyczek ratalnych przez internet, bez konieczności wychodzenia z domu</strong>. Dlatego w Wondze dobranie pożyczki do własnych potrzeb i wymagań jest dużo prostsze niż w firmach pożyczkowych, które mają w ofercie tylko niskokwotowe pożyczki.</p>
+            <p>Jako jeden z pierwszych pożyczkodawców, Wonga udziela pożyczek dopiero po skontrolowaniu historii kredytowania klienta w <strong>Biurze Informacji Kredytowej (BIK)</strong>. Jeśli klienta interesuje szybka pożyczka, Wonga także jej udzieli, ale nie zrezygnuje ze sprawdzenia danych klienta w dostępnych bazach danych – w BIK-u i w BIG-ach (biurach informacji gospodarczej). Z uwagi na fakt, że <strong>wszystkie formalności można załatwić online</strong>, pożyczka w Wondze dostępna jest w stosunkowo krótkim czasie.</p>
+
+            <h2>Zakres kwot i okres spłaty</h2>
+             <p>W Wondze można dobrać pożyczkę, ponieważ firma ta udziela pożyczek krótkoterminowych i ratalnych w szerokim przedziale kwotowym. Jeśli interesuje nas <strong>krótkoterminowa pożyczka, Wonga udzieli jej w kwocie od 50 zł do 1500 zł</strong>. Natomiast <strong>pożyczki ratalne udzielane są w kwocie nawet do 20 000 zł</strong>.</p>
+             <p>Okres spłaty pożyczek krótkoterminowych wynosi <strong>od 1 do 60 dni</strong>, a pożyczek ratalnych – <strong>do 60 miesięcy</strong>.</p>
+
+            <h2>Koszty i proces wnioskowania</h2>
+            <p>Klienci od razu informowani są o <strong>wszystkich kosztach</strong> i konsekwencjach zaciągnięcia pożyczki. Oprocentowanie pożyczki w Wondze jest konkurencyjne i już na etapie wnioskowania o takie zobowiązanie klient wie, ile za pożyczkę zapłaci.</p>
+            <p><strong>Koszt pierwszej pożyczki krótkoterminowej Wonga dla nowych klientów jest stały</strong>, a koszt kolejnej zależy od indywidualnej oceny zdolności kredytowej klienta i terminowego regulowania zobowiązań. Proces wnioskowania i weryfikacji wniosku pożyczkowego jest <strong>zautomatyzowany</strong>. Udzielenie pierwszej pożyczki na konto klienta odbywa się w 100 proc. w trybie online. W większości przypadków klient <strong>nie musi dosyłać dokumentów</strong>.</p>
+
+        </section>
+
+         <section class="content-section full-details-section" id="smartney-full-details">
+             <span class="back-to-offers" onclick="showContent('pozyczki-offers');">← Powrót do ofert pożyczek</span>
+
+             <h2>Smartney - Szczegółowy opis oferty</h2>
+
+             <p>Smartney stale współpracuje z wieloma partnerami technologicznymi, którzy pozwalają unowocześnić proces starania się o pieniądze. Dzięki nim jest on <strong>bardzo wygodny, szybki i prosty</strong>. O pożyczki możesz ubiegać się z poziomu nie tylko Twojego komputera, ale nawet smartfona. Wniosek złożysz więc skutecznie <strong>bez wstawania z kanapy</strong>.</p>
+
+            <h2>Komunikacja ze Smartney</h2>
+            <p>Kontakt nawiążesz bardzo łatwo w najwygodniejszy dla Ciebie sposób. Możesz skorzystać z <strong>infolinii lub chatu</strong>. Możesz też wykorzystać formularz na stronie internetowej lub napisać bezpośrednio na mail do Smartney. Godziny otwarcia są długie, więc z pewnością uda Ci się dopasować odpowiednie do Twoich preferencji. Firma działa <strong>od poniedziałku do piątku od 8:00 do 21:00, a także w soboty oraz niedziele od 9:00 do 16:00</strong>.</p>
+
+            <h2>Opinie i zalety pożyczek w Smartney</h2>
+            <p>Czy warto pożyczać w Smartney pożyczki? <strong>Opinie o firmie są bardzo atrakcyjne</strong>, dlatego z pewnością warto wziąć tę ofertę pod uwagę. Wiele elementów wyróżnia ją spośród konkurencyjnych propozycji.</p>
+            <p>Jest <strong>prosta w obsłudze, przyznawana na długi czas, a przede wszystkim oferuje wysoką kwotę maksymalną</strong>. Jeśli zależy Ci właśnie na takich parametrach pożyczki, jak najbardziej powinieneś zainteresować się tą opcją.</p>
+            <p>Tym bardziej że Smartney jest <strong>członkiem Związku Przedsiębiorstw Finansowych</strong>, który działa zgodnie z Zasadami Dobrych Praktyk.</p>
+
+        </section>
+
+        <section class="content-section" id="about-us-section">
+            <h2>O nas</h2>
+            <p>Witaj na naszej stronie! Jesteśmy platformą stworzoną z myślą o osobach poszukujących najlepszych rozwiązań finansowych w Polsce.</p>
+            <p>Rozumiemy, jak złożony i czasochłonny może być proces porównywania ofert kredytów, pożyczek, kont czy kart. Dziesiątki banków i instytucji, setki promocji i warunków – łatwo się w tym zgubić. Naszą misją jest uproszczenie tego procesu i dostarczenie Ci jasnych, aktualnych informacji w jednym miejscu.</p>
+            <p>Zbieramy i prezentujemy starannie wybrane oferty z rynku finansowego. Naszym celem jest umożliwienie Ci szybkiego porównania kluczowych parametrów różnych produktów, tak abyś mógł podjąć świadomą i korzystną dla siebie decyzję. Nie reprezentujemy żadnego konkretnego banku czy instytucji – zależy nam na tym, abyś miał dostęp do różnorodnych propozycji.</p>
+            <p>Stale monitorujemy rynek i aktualizujemy naszą bazę ofert, aby zapewnić Ci dostęp do najnowszych promocji i warunków.</p>
+            <p>Wierzymy, że dzięki naszej platformie, znalezienie odpowiedniego produktu finansowego stanie się prostsze i bardziej efektywne. Oszczędzasz czas, wysiłek i zyskujesz pewność, że rozważasz najlepsze dostępne opcje.</p>
+            <p>Zapraszamy do korzystania z naszej wyszukiwarki i porównywarki ofert. Jeśli masz pytania, skontaktuj się z nami!</p>
+        </section>
+
+         <section class="content-section" id="contact-section">
+             <h2>Kontakt</h2>
+             <p>Tutaj będą znajdować się informacje kontaktowe.</p>
+             </section>
+
+
+        <div class="image-container">
+            <img src="http://googleusercontent.com/image_generation_content/5" alt="Nowoczesna strona banku" style="max-width: 100%; height: auto;">
+        </div>
+
+    </main>
+
+    <footer>
+        &copy; 2024 EasyMoney
+    </footer>
+
+    <script>
+        // Funkcja do pokazywania konkretnej sekcji treści i ukrywania pozostałych
+        function showContent(sectionId) {
+            // Ukryj wszystkie sekcje treści (te z klasą .content-section)
+            const contentSections = document.querySelectorAll('.content-section');
+            contentSections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Pokaż tylko sekcję o danym ID
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            }
+             // Przewiń do góry strony, żeby sekcja była w pełni widoczna
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+         // Domyślnie pokaż sekcję powitalną przy ładowaniu strony
+         document.addEventListener('DOMContentLoaded', () => {
+            showContent('welcome-section');
+         });
+    </script>
+
+</body>
+</html>
