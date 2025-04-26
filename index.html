@@ -5,326 +5,1014 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EasyMoney</title>
     <style>
+        /* Import nowoczesnego fontu */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+
+        /* CSS Variables for Theme (Dark Mode Default) */
+        :root {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-bg: #000000;
+            --nav-bg: #000000;
+            --footer-bg: #000000;
+            --primary-color: #FFD700; /* Golden - GŁÓWNY KOLOR AKCENTU */
+            --secondary-color: #1a1a1a;
+            --section-bg: #1c1c1c;
+            --offer-bg: #242424;
+            --offer-border: #3a3a3a;
+            --shadow-color: rgba(0,0,0,0.5);
+            --hover-bg: #2a2a2a;
+            --link-color: #cccccc;
+            --link-hover-color: #FFD700; /* Yellow hover for links */
+            --dropdown-bg: #1c1c1c;
+            --dropdown-link-color: #e0e0e0;
+            --dropdown-link-hover-bg: #333333;
+            --dropdown-link-hover-color: #FFD700; /* Yellow hover in dropdown */
+             --credible-text-color: #cccccc;
+             --separator-color: #3a3a3a;
+             --button-text-color: #1a1a1a; /* Dark text on yellow button */
+             --button-disabled-bg: #555555;
+             --button-disabled-color: #aaaaaa;
+             --button-enabled-bg: var(--primary-color); /* Yellow button */
+             --button-enabled-color: var(--button-text-color);
+             --button-hover-bg: #e6c300; /* Darker yellow hover */
+             /* ZMIANA: Cień przycisku na czarny */
+             --button-enabled-shadow: rgba(0, 0, 0, 0.3);
+             --button-enabled-hover-shadow: rgba(0, 0, 0, 0.5);
+             --details-popup-bg: #242424;
+             --details-border: #3a3a3a;
+             --scrollbar-track: #333;
+             --scrollbar-thumb: #555;
+             --scrollbar-thumb-hover: #FFD700; /* Yellow scrollbar hover */
+        }
+
+        /* Light Mode */
+        body.light-mode {
+            --bg-color: #f4f4f4;
+            --text-color: #333333;
+            --header-bg: #ffffff;
+            --nav-bg: #ffffff;
+            --footer-bg: #ffffff;
+            /* --primary-color: #007bff; */ /* USUNIĘTO - teraz dziedziczy #FFD700 z :root */
+            --link-hover-color: var(--primary-color); /* ZMIANA - hover linku na żółty */
+             --dropdown-link-hover-color: var(--primary-color); /* ZMIANA - hover w dropdown na żółty */
+             --button-text-color: #1a1a1a;
+             --button-hover-bg: #e6c300;
+             /* ZMIANA: Cień przycisku na czarny w trybie jasnym */
+             --button-enabled-shadow: rgba(0, 0, 0, 0.2); /* Nieco jaśniejszy cień w light mode */
+             --button-enabled-hover-shadow: rgba(0, 0, 0, 0.4); /* Nieco jaśniejszy cień w light mode na hover */
+             --scrollbar-thumb-hover: var(--primary-color);
+
+             --secondary-color: #e9e9e9;
+             --section-bg: #ffffff;
+             --offer-bg: #f9f9f9;
+             --offer-border: #dddddd;
+             --shadow-color: rgba(0,0,0,0.1);
+             --hover-bg: #eeeeee;
+             --link-color: #333333;
+             --credible-text-color: #555555;
+             --separator-color: #dddddd;
+             --button-enabled-bg: var(--primary-color);
+             --button-enabled-color: var(--button-text-color);
+             --details-popup-bg: #ffffff;
+             --details-border: #dddddd;
+             --scrollbar-track: #f0f0f0;
+             --scrollbar-thumb: #ccc;
+        }
+
+        /* Apply Variables */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Nowoczesny font */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif; /* Apply font */
             margin: 0;
             padding: 0;
-            background-color: #1a1a1a; /* Ciemne tło */
-            color: #cccccc; /* Jasnoszary tekst główny */
+            box-sizing: border-box;
+            line-height: 1.6;
         }
 
-        header {
-            background-color: #000000; /* Czarne tło nagłówka */
-            color: white;
-            padding: 1.5em 0; /* Większy padding */
-            text-align: center;
-            border-bottom: 2px solid #FFD700; /* Złota linia pod nagłówkiem */
+        *, *:before, *:after {
+            box-sizing: inherit;
         }
 
+         header {
+            background-color: var(--header-bg);
+            padding: 1em 1em; /* Dodano padding po bokach dla lepszego odstępu */
+            text-align: center; /* Usunięte, ponieważ używamy flexbox */
+            border-bottom: 3px solid var(--primary-color); /* Accent border */
+             box-shadow: 0 8px 16px var(--shadow-color);
+             position: relative; /* Needed for theme switcher positioning and z-index */
+             display: flex; /* Użyj flexbox do wyrównania elementów */
+             justify-content: center; /* Wyśrodkuj zawartość poziomo */
+             align-items: center; /* Wyśrodkuj w pionie */
+             min-height: 80px; /* Minimalna wysokość nagłówka */
+             gap: 17px; /* Odstęp między elementami w flexboxie (tytuł i logo) */
+             flex-wrap: wrap; /* Pozwól elementom zawijać się na małych ekranach */
+        }
+
+        /* Style dla napisu EasyMoney w nagłówku */
         header h1 {
-            margin: 0; /* Usunięcie domyślnego marginesu nagłówka */
-            color: #FFD700; /* Złoty kolor nagłówka */
-            font-size: 2.5em; /* Większa czcionka nagłówka */
-            text-transform: uppercase; /* Duże litery */
-            letter-spacing: 2px; /* Rozstrzelone litery */
+             color: var(--primary-color); /* Zawsze żółty */
+             margin: 0; /* Usunięcie domyślnych marginesów h1 */
+             font-size: 2.8em;
+             font-weight: 700; /* Pogrubiony tekst */
+             letter-spacing: 2px;
+             /* Efekt żółtego glow (zmniejszony) */
+             text-shadow:
+                0 0 6px var(--primary-color), /* Zmniejszone */
+                0 0 12px rgba(255, 215, 0, 0.2), /* Zmniejszone */
+                0 0 18px var(--primary-color), /* Zmniejszone */
+                0 0 24px rgba(255, 215, 0, 0.4); /* Zmniejszone */
+                 /* Usunięto dalsze warstwy glow dla zmniejszenia intensywności */
+
+             white-space: nowrap; /* Zapobiegaj łamaniu linii w napisie */
+             position: relative; /* Konieczne dla z-index */
+             z-index: 2; /* Wyższa warstwa niż logo */
         }
 
-
-        nav {
-            background-color: #000000; /* Czarne tło nawigacji */
-            color: white;
-            padding: 0.8em 0; /* Większy padding */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5); /* Delikatny cień */
-            position: sticky; /* Menu przyklejone do góry */
-            top: 0;
-            z-index: 100; /* Upewnij się, że menu jest na wierzchu */
+        /* Style dla logo w nagłówku */
+        .header-logo {
+             max-height: 65px; /* Delikatnie powiększone logo w nagłówku (więcej niż poprzednio) */
+             width: auto;
+             display: block;
+             position: relative; /* Konieczne dla z-index */
+             z-index: 1; /* Niższa warstwa niż tekst */
         }
 
-        nav ul {
-            list-style-type: none;
+         nav {
+            background-color: var(--nav-bg);
+            padding: 0.5em 0;
+            box-shadow: 0 6px 12px var(--shadow-color);
+         }
+         nav ul {
+            list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
             justify-content: center;
-        }
-
-        nav li {
-            position: relative;
-            margin: 0 20px; /* Większe odstępy między elementami */
-        }
-
-        nav a {
-            color: #cccccc; /* Jasnoszary tekst menu */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+         }
+          nav li {
+             position: relative; /* For dropdown positioning */
+             margin: 0 15px; /* Spacing between items */
+          }
+         nav a {
+            color: var(--link-color);
             text-decoration: none;
-            padding: 0.8em 1em;
+            padding: 0.8em 1.2em; /* Padding for clickable area */
             display: block;
-            transition: color 0.3s ease; /* Płynna zmiana koloru */
-        }
-
-        nav a:hover {
-            color: #FFD700; /* Złoty kolor przy najechaniu */
-            background-color: #333333; /* Ciemniejsze tło przy najechaniu */
-        }
-
+            font-weight: 600;
+            transition: color 0.3s ease, background-color 0.3s ease, text-shadow 0.3s ease;
+            border-radius: 4px;
+         }
+         nav a:hover, nav li:hover > a { /* Highlight on hover */
+            color: var(--link-hover-color); /* Teraz zawsze żółty */
+            background-color: var(--hover-bg);
+             /* ZMIANA: Dostosowanie text-shadow dla hover (zawsze żółty) */
+             text-shadow: 0 0 8px var(--primary-color);
+         }
+         /* Dropdown Content (Hidden by Default) */
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: #282828; /* Ciemnoszare tło dropdown */
-            min-width: 200px; /* Większa minimalna szerokość */
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
-            z-index: 10; /* Wyższy z-index, aby było nad innymi elementami */
-            top: 100%;
-            left: 0;
-            border-top: 2px solid #FFD700; /* Złota linia na górze dropdown */
+            background-color: var(--dropdown-bg);
+            min-width: 200px; /* Wider dropdown */
+            box-shadow: 0px 12px 24px 0px var(--shadow-color);
+            z-index: 100; /* Ensure dropdown is above other content */
+            border-top: 3px solid var(--primary-color); /* Zawsze żółty */
+            border-radius: 0 0 5px 5px;
+            padding: 0.5em 0; /* Padding inside dropdown */
+            left: 0; /* Align with parent */
         }
-
         .dropdown-content a {
-            color: #cccccc; /* Jasnoszary tekst dropdown */
-            padding: 12px 18px; /* Większy padding w dropdown */
+            color: var(--dropdown-link-color);
+            padding: 12px 16px; /* More padding for dropdown links */
             text-decoration: none;
             display: block;
-            white-space: nowrap;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: 400; /* Normal weight for dropdown items */
+             transition: background-color 0.3s ease, color 0.3s ease;
         }
-
         .dropdown-content a:hover {
-            background-color: #3a3a3a; /* Ciemniejsze tło przy najechaniu */
-            color: #FFD700; /* Złoty kolor tekstu */
+            background-color: var(--dropdown-link-hover-bg);
+            color: var(--dropdown-link-hover-color); /* Zawsze żółty */
+             text-shadow: none; /* Remove text shadow on hover for dropdown links */
         }
-
-        nav li:hover .dropdown-content {
+        /* Show the dropdown menu on hover */
+        nav li:hover > .dropdown-content {
             display: block;
         }
+         /* Mobile dropdown class controlled by JS */
+         nav li.show-dropdown > .dropdown-content {
+            display: block;
+         }
 
-        main {
-            padding: 2em 1em; /* Większy padding na górze i na dole */
-            min-height: calc(100vh - 150px); /* Dostosowany min-height */
-            padding-bottom: 80px; /* Większy padding na dole */
-        }
 
-        footer {
-            background-color: #000000; /* Czarne tło stopki */
-            color: #cccccc; /* Jasnoszary tekst stopki */
-            text-align: center;
-            padding: 1.5em 0; /* Większy padding */
-            position: relative;
-            width: 100%;
-            margin-top: 40px; /* Większy odstęp od treści */
-        }
+         main {
+            padding: 2em 1em; /* Padding around main content */
+            max-width: 1200px; /* Max width for content */
+            margin: 0 auto; /* Center content */
+         }
 
-        /* Klasa dla wszystkich sekcji treści, które będą ukrywane/pokazywane */
-        .content-section {
-             display: none;
-             margin-top: 30px; /* Większy odstęp */
-             background-color: #282828; /* Ciemnoszare tło sekcji */
-             padding: 30px; /* Większy padding */
-             box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Wyraźniejszy cień */
-             border-radius: 8px; /* Zaokrąglone rogi sekcji */
-             max-width: 900px; /* Nieco większa maksymalna szerokość */
-             margin-left: auto;
-             margin-right: auto; /* Centrowanie sekcji */
-             color: #cccccc; /* Tekst w sekcji jasnoszary */
-        }
+         .content-section {
+             background-color: var(--section-bg);
+             padding: 2em; /* Padding inside sections */
+             margin: 2em auto; /* Spacing between sections */
+             border-radius: 8px; /* Rounded corners */
+             box-shadow: 0 10px 30px var(--shadow-color);
+             /* Animation properties */
+             opacity: 0;
+             transform: translateY(20px);
+             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+             display: none; /* Hide sections by default (JS will show them) */
+         }
+
+         .content-section.is-visible {
+             opacity: 1;
+             transform: translateY(0);
+             display: block; /* Show section when visible */
+         }
+
 
          #welcome-section {
-            text-align: center;
-            padding: 40px 20px; /* Większy padding */
-            background-color: #282828; /* Ciemnoszare tło */
-             border-radius: 8px;
-             max-width: 900px;
-             margin: 30px auto 20px auto; /* Marginesy */
-             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+             /* background: linear-gradient(45deg, #1c1c1c, #282828); */ /* Example gradient */
+             background-color: var(--section-bg); /* Solid color for theme switch compatibility */
+             text-align: center; /* Center welcome text */
          }
-         #welcome-section h2 {
-             color: #FFD700; /* Złoty nagłówek */
-             margin-bottom: 15px;
-         }
-          #welcome-section p {
-             font-size: 1.1em;
-             line-height: 1.6;
+          #welcome-section h2 {
+              color: var(--primary-color); /* Zawsze żółty */
+              text-shadow: 0 0 8px var(--primary-color); /* Zawsze żółty cień */
+              font-size: 2.2em;
+              margin-bottom: 0.5em;
           }
+           #welcome-section p {
+              color: var(--text-color);
+              font-size: 1.1em;
+              max-width: 800px; /* Limit width of paragraph */
+              margin: 0 auto; /* Center paragraph */
+           }
 
 
-        .offers-section h3 {
-            color: #FFD700; /* Złoty nagłówek sekcji ofert */
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 1.8em;
-            border-bottom: 1px solid #3a3a3a; /* Ciemniejsza linia pod nagłówkiem */
-            padding-bottom: 10px;
-        }
-
+         .offers-section h3 {
+             color: var(--primary-color); /* Zawsze żółty */
+             border-bottom: 2px solid var(--separator-color);
+             padding-bottom: 0.5em;
+             margin-bottom: 1.5em;
+             font-size: 1.8em;
+             text-align: center;
+             text-shadow: 0 0 8px var(--primary-color); /* Zawsze żółty cień */
+         }
 
         .offer {
-            border: 1px solid #3a3a3a; /* Ciemniejsza ramka */
-            padding: 15px; /* Większy padding */
-            margin-bottom: 15px; /* Większy odstęp */
             display: flex;
-            flex-direction: column; /* Elementy układane kolumnowo */
-            align-items: flex-start; /* Wyrównanie do lewej */
-            background-color: #333333; /* Ciemniejsze tło dla każdej oferty */
-            border-radius: 5px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Delikatny cień dla oferty */
+            flex-direction: column; /* Stack elements vertically */
+            align-items: stretch; /* Stretch items to full width */
+            padding: 1.5em;
+            margin-bottom: 1.5em;
+            border: 1px solid var(--offer-border);
+            border-left: 5px solid var(--primary-color); /* Zawsze żółty */
+            background-color: var(--offer-bg);
+             box-shadow: 0 6px 15px var(--shadow-color);
+             border-radius: 5px;
+             transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
         }
 
-        .offer-description {
-            flex-grow: 1;
-            margin-right: 0; /* Usunięto prawy margines */
-            margin-bottom: 15px; /* Dodano dolny margines, żeby oddzielić od przycisku */
+        .offer:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--shadow-color);
+            background-color: var(--hover-bg);
         }
 
+         .offer-description {
+             flex-grow: 1;
+             margin-right: 0;
+             margin-bottom: 1em;
+         }
          .offer-description h4 {
+             color: var(--primary-color); /* Zawsze żółty */
              margin-top: 0;
-             margin-bottom: 8px; /* Większy odstęp */
-             color: #FFD700; /* Złoty kolor banku/firmy */
-             font-size: 1.3em;
+             margin-bottom: 0.5em;
+             font-size: 1.4em;
          }
-
          .offer-description p {
-             margin-top: 0;
-             margin-bottom: 5px;
-             line-height: 1.6; /* Lepszy odstęp między liniami */
-             color: #cccccc; /* Jasnoszary tekst opisu */
-             font-size: 1em;
+             color: var(--text-color);
+             margin: 0;
+             line-height: 1.5;
          }
-
 
         .offer button {
-            background-color: #FFD700; /* Złote tło przycisku */
-            color: #1a1a1a; /* Ciemny tekst przycisku */
-            padding: 10px 15px; /* Większy padding */
+            background-color: var(--button-enabled-bg); /* Zawsze żółty */
+            color: var(--button-enabled-color); /* Zawsze ciemny tekst */
+            padding: 12px 25px;
             border: none;
             cursor: pointer;
             flex-shrink: 0;
             border-radius: 5px;
-            transition: background-color 0.3s ease, opacity 0.3s ease;
-            font-weight: bold;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+            font-weight: 700;
             text-transform: uppercase;
-            align-self: center; /* Centruje przycisk w kolumnie */
+            font-size: 1em;
+            /* Używa zmiennych zdefiniowanych na górze - teraz czarnych */
+            box-shadow: 0 4px 8px var(--button-enabled-shadow);
+             margin-top: 1em;
+             width: auto;
+             align-self: flex-start;
         }
 
         .offer button:hover {
-            background-color: #e6c300; /* Ciemniejszy złoty przy najechaniu */
-            opacity: 0.9;
+            background-color: var(--button-hover-bg); /* Zawsze ciemniejszy żółty */
+            /* Używa zmiennych zdefiniowanych na górze - teraz czarnych */
+            box-shadow: 0 6px 12px var(--button-enabled-hover-shadow);
+            transform: scale(1.03);
         }
 
-        .more-info-link {
-            display: inline-block;
-            margin-top: 8px; /* Większy odstęp */
+
+         .more-info-link {
+             color: var(--primary-color); /* Zawsze żółty */
+             display: inline-block;
+            margin-top: 10px;
             font-size: 0.95em;
-            color: #FFD700; /* Złoty kolor linku */
             text-decoration: underline;
             cursor: pointer;
             transition: color 0.3s ease;
-        }
-         .more-info-link:hover {
-            text-decoration: none;
-            color: #ffff00; /* Jaśniejszy złoty/żółty przy najechaniu */
          }
+          .more-info-link:hover {
+             color: var(--button-hover-bg); /* Użyjmy ciemniejszego żółtego dla hover */
+             text-decoration: none;
+          }
 
-        /* Style dla pełnych opisów i sekcji "O nas" */
+        /* Style dla pełnych opisów i sekcji "O nas", "Kontakt" */
         .full-details-section h2,
         #about-us-section h2,
          #contact-section h2 {
-            color: #FFD700; /* Złote nagłówki sekcji */
+            color: var(--primary-color); /* Zawsze żółty */
             margin-top: 20px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #3a3a3a; /* Ciemniejsza linia */
-            padding-bottom: 5px;
-             font-size: 1.8em;
+            margin-bottom: 1em;
+            border-bottom: 2px solid var(--separator-color);
+            padding-bottom: 0.5em;
+             font-size: 2em;
+             font-weight: 600;
         }
          .full-details-section p,
          #about-us-section p,
          #contact-section p {
-             margin-bottom: 15px;
-             line-height: 1.7; /* Lepszy odstęp */
-             color: #cccccc; /* Jasnoszary tekst */
+             margin-bottom: 1.2em;
+             line-height: 1.8;
+             color: var(--text-color);
+             font-size: 1.05em;
         }
         .full-details-section strong {
-            color: #ffff00; /* Jaśniejszy żółty dla ważnych informacji */
+            /* ZMIANA: Użyjmy ciemniejszego żółtego do wyróżnienia */
+            color: var(--button-hover-bg);
+            font-weight: 600;
         }
+        .full-details-section ul {
+            list-style: disc;
+            margin-left: 20px;
+            margin-bottom: 1.2em;
+        }
+
          .back-to-offers {
             display: inline-block;
-            margin-bottom: 20px;
-            padding: 10px 15px; /* Większy padding */
-            background-color: #3a3a3a; /* Ciemnoszare tło przycisku */
-            color: #cccccc; /* Jasnoszary tekst przycisku */
+            margin-bottom: 2em;
+            padding: 10px 18px;
+            background-color: var(--offer-border);
+            color: var(--text-color);
             text-decoration: none;
             border-radius: 5px;
-             transition: background-color 0.3s ease, color 0.3s ease;
+             transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
              cursor: pointer;
              font-size: 0.9em;
              text-transform: uppercase;
-             border: 1px solid #555; /* Delikatna ramka */
+             border: 1px solid var(--offer-border);
+             font-weight: 600;
         }
-         .back-to-offers:hover {
-             background-color: #5a6268; /* Ciemniejszy szary */
-             color: white;
+          .back-to-offers:hover {
+              background-color: var(--hover-bg);
+              color: var(--text-color);
+              transform: translateY(-2px);
+              box-shadow: 0 2px 8px var(--shadow-color);
+          }
+
+        /* Usunięto oryginalne image-container */
+         /* .image-container { */
+         /* text-align: center; */
+         /* margin-top: 3em; */
+         /* margin-bottom: 3em; */
+         /* } */
+         /* .image-container img { */
+         /* border: 3px solid var(--primary-color); */
+         /* box-shadow: 0 15px 35px var(--shadow-color); */
+         /* border-radius: 10px; */
+         /* max-width: 100%; */
+         /* height: auto; */
+         /* } */
+
+        /* Nowe style dla logo w żółtym kółku na dole */
+         .circular-logo-container {
+            width: 75px; /* Rozmiar kontenera koła (zmniejszony 2x) */
+            height: 75px; /* Rozmiar kontenera koła (zmniejszony 2x) */
+            background-color: var(--primary-color); /* Żółte tło */
+            border-radius: 50%; /* Kształt koła */
+            display: flex;
+            justify-content: center; /* Centrowanie poziome zawartości (logo) */
+            align-items: center; /* Centrowanie pionowe zawartości (logo) */
+            margin: 3em auto; /* Centrowanie kontenera na stronie i dodanie marginesów */
+            overflow: hidden; /* Ukryj część obrazu wystającą poza kółko */
+            box-shadow: 0 10px 20px var(--shadow-color); /* Cień */
+            border: 5px solid var(--text-color); /* Pogrubiona obwódka */
+         }
+
+         .circular-logo {
+             width: 100%; /* Logo wypełnia całe kółko */
+             height: 100%; /* Logo wypełnia całe kółko */
+             object-fit: cover; /* Upewnij się, że obraz wypełnia kółko bez zniekształceń */
+             display: block; /* Upewnij się, że obraz jest elementem blokowym */
          }
 
 
-        .image-container {
-            text-align: center;
-            margin-top: 40px; /* Większy odstęp */
-            margin-bottom: 40px;
-        }
-         .image-container img {
-             border: 2px solid #FFD700; /* Złota ramka wokół obrazu */
-             box-shadow: 0 5px 15px rgba(0,0,0,0.5); /* Cień obrazu */
-             border-radius: 8px; /* Zaokrąglone rogi obrazu */
+         footer {
+             background-color: var(--footer-bg);
+             color: var(--link-color);
+             text-align: center;
+            padding: 2em 1em;
+            margin-top: 3em;
+             box-shadow: 0 -8px 16px var(--shadow-color);
          }
 
 
-        /* Prosta responsywność dla menu */
-        @media (max-width: 768px) { /* Zmieniono breakpoint */
+        /* Prosta responsywność */
+        @media (max-width: 768px) {
+            header {
+                min-height: 60px; /* Zmniejsz minimalną wysokość nagłówka */
+                flex-direction: column; /* Ułóż elementy w kolumnie na małych ekranach */
+                gap: 5px; /* Zmniejsz odstęp */
+                 padding: 1em 0.5em; /* Zmniejsz padding na małych ekranach */
+            }
+            header h1 {
+                font-size: 2.2em; /* Zmniejsz rozmiar tekstu */
+                letter-spacing: 1px;
+                 text-shadow:
+                    0 0 5px var(--primary-color),
+                    0 0 10px rgba(255, 215, 0, 0.3),
+                    0 0 20px var(--primary-color); /* Zmniejsz efekt glow */
+            }
+            .header-logo {
+                max-height: 40px; /* Zmniejsz rozmiar logo w nagłówku na mniejszych ekranach */
+            }
+            /* header h1 { */
+                /* font-size: 2.2em; */
+                /* letter-spacing: 1px; */
+            /* } */
             nav ul {
                 flex-direction: column;
                 align-items: center;
             }
             nav li {
-                margin: 0.3em 0; /* Mniejsze odstępy */
+                margin: 0.5em 0;
+                width: 100%;
+                text-align: center;
             }
-            .dropdown-content {
-                position: static;
-                box-shadow: none;
-                min-width: auto;
-                border-top: none; /* Usunięcie górnej ramki na mobile */
-            }
-            nav li:hover .dropdown-content {
-                 /* To wymaga JavaScript, żeby działało na kliknięcie na mobile */
-                 /* display: none; */ /* Usunięto, żeby nie kolidowało z ewentualnym JS */
-            }
-             /* Resetowanie stylów flex dla oferty na małych ekranach */
-            .offer {
-                 flex-direction: column; /* Na małych ekranach układ kolumnowy */
-                 align-items: flex-start; /* Wyrównanie do lewej na małych ekranach */
-            }
-            .offer-description {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
+             nav a {
+                 padding: 0.8em 0.5em;
+             }
+             nav li:hover > .dropdown-content {
+                display: none;
+             }
+             nav li.show-dropdown > .dropdown-content {
+                 display: block;
+                 position: static;
+                 box-shadow: none;
+                 min-width: auto;
+                 border-top: none;
+                 border-radius: 0;
+                 background-color: var(--hover-bg);
+             }
+             .dropdown-content a {
+                padding: 10px 15px;
+             }
+
+             .offer {
+                 padding: 1em;
+                 margin-bottom: 1em;
+                 border-left-width: 3px;
+             }
+              .offer-description {
+                 margin-bottom: 1em;
+             }
+             .offer-description h4 {
+                 font-size: 1.2em;
+             }
+              .offer-description p {
+                 font-size: 1em;
+             }
              .offer button {
-                align-self: center; /* Centruje przycisk */
+                 padding: 10px 15px;
+                 font-size: 0.95em;
+                 align-self: stretch;
+                 text-align: center;
+                 width: 100%;
              }
 
-
-             /* Sekcje treści na małych ekranach bez centrowania max-width */
              .content-section, #welcome-section {
-                 max-width: 100%;
-                 padding: 15px; /* Nieco większy padding na mobile */
-                 margin: 15px auto; /* Mniejszy margines */
+                 padding: 1.5em;
+                 margin: 1.5em auto;
              }
-             header h1 {
-                 font-size: 2em; /* Mniejszy nagłówek na mobile */
+             .full-details-section h2, #about-us-section h2, #contact-section h2 {
+                 font-size: 1.6em;
+             }
+              .full-details-section p, #about-us-section p, #contact-section p {
+                 font-size: 1em;
+              }
+             .back-to-offers {
+                 padding: 8px 15px;
+                 font-size: 0.9em;
+             }
+             main {
+                 padding: 1em 0.5em;
+             }
+            .circular-logo-container {
+                width: 60px; /* Zmniejsz rozmiar koła na mniejszych ekranach (proporcjonalnie do 75px) */
+                height: 60px;
+                margin: 2em auto;
+                 border-width: 3px; /* Zmniejsz grubość obwódki na mniejszych ekranach */
+            }
+             .circular-logo {
+                 width: 100%; /* Logo wypełnia całe kółko */
+                 height: 100%; /* Logo wypełnia całe kółko */
+                 object-fit: cover;
              }
         }
-    </style>
+         /* Responsywność dla bardzo małych ekranów */
+         @media (max-width: 480px) {
+             header {
+                 min-height: 50px;
+                 gap: 3px;
+             }
+             header h1 {
+                 font-size: 1.8em;
+                 letter-spacing: 0.5px;
+                  text-shadow:
+                    0 0 5px var(--primary-color),
+                    0 0 10px rgba(255, 215, 0, 0.2); /* Zmniejsz efekt glow */
+             }
+             .header-logo {
+                 max-height: 35px;
+             }
+             /* header h1 { */
+             /* font-size: 1.8em; */
+             /* letter-spacing: 0.5px; */
+             /* } */
+             nav a {
+                 padding: 0.8em 0.5em;
+             }
+             .offer-description h4 {
+                 font-size: 1.1em;
+             }
+             .offer-description p {
+                 font-size: 0.95em;
+             }
+             .offer button {
+                 font-size: 0.9em;
+             }
+             .full-details-section h2, #about-us-section h2, #contact-section h2 {
+                 font-size: 1.4em;
+             }
+              .full-details-section p, #about-us-section p, #contact-section p {
+                 font-size: 0.95em;
+              }
+             .circular-logo-container {
+                width: 50px; /* Zmniejsz rozmiar koła (proporcjonalnie do 75px) */
+                height: 50px;
+                margin: 1.5em auto;
+                 border-width: 2px; /* Zmniejsz grubość obwódki na mniejszych ekranach */
+             }
+             .circular-logo {
+                 width: 100%; /* Logo wypełnia całe kółko */
+                 height: 100%; /* Logo wypełnia całe kółko */
+                 object-fit: cover;
+             }
+         }
+
+
+        /* Loading Overlay */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Spinner */
+        .loader {
+            border: 8px solid var(--separator-color);
+            border-top: 8px solid var(--primary-color); /* Zawsze żółty */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Cookie Consent Overlay */
+        #cookie-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 900;
+            display: none;
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        /* Cookie Consent Popup */
+        #cookie-consent-popup {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 12px 30px var(--shadow-color);
+            z-index: 910;
+            max-width: 90%;
+            width: 500px;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        #cookie-consent-popup h3 {
+            color: var(--primary-color); /* Zawsze żółty */
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        #cookie-consent-popup p {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+
+         .cookie-credible-text {
+             font-size: 0.85em;
+             color: var(--credible-text-color);
+             margin-top: 15px;
+             padding-top: 15px;
+             border-top: 1px solid var(--separator-color);
+         }
+
+
+        .cookie-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        #learn-more-cookie {
+            color: var(--primary-color); /* Zawsze żółty */
+            text-decoration: underline;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            margin-right: auto;
+        }
+        #learn-more-cookie:hover {
+             color: var(--button-hover-bg); /* Ciemniejszy żółty */
+             text-decoration: none;
+        }
+
+
+        #accept-cookie {
+            background-color: var(--button-disabled-bg);
+            color: var(--button-disabled-color);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: not-allowed;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, cursor 0.3s ease;
+        }
+
+        #accept-cookie.enabled {
+            background-color: var(--button-enabled-bg); /* Zawsze żółty */
+            color: var(--button-enabled-color); /* Zawsze ciemny tekst */
+            cursor: pointer;
+            /* Używa zmiennych zdefiniowanych na górze - teraz czarnych */
+            box-shadow: 0 4px 8px var(--button-enabled-shadow);
+        }
+         #accept-cookie.enabled:hover {
+             background-color: var(--button-hover-bg); /* Zawsze ciemniejszy żółty */
+              /* Używa zmiennych zdefiniowanych na górze - teraz czarnych */
+             box-shadow: 0 6px 12px var(--button-enabled-hover-shadow);
+         }
+
+
+        /* Cookie Details Popup (Learn More) */
+        #cookie-details-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background-color: var(--details-popup-bg);
+            color: var(--text-color);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 12px 30px var(--shadow-color);
+            z-index: 920;
+            max-width: 90%;
+            width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            border: 1px solid var(--details-border);
+        }
+
+        #cookie-details-popup h4 {
+             color: var(--primary-color); /* Zawsze żółty */
+             margin-top: 0;
+             margin-bottom: 15px;
+             font-size: 1.3em;
+             border-bottom: 1px solid var(--separator-color);
+             padding-bottom: 10px;
+        }
+
+        #cookie-details-popup p,
+        #cookie-details-popup li {
+            margin-bottom: 15px;
+            line-height: 1.6;
+             font-size: 0.95em;
+        }
+         #cookie-details-popup ul {
+             margin-bottom: 15px;
+             padding-left: 20px;
+             list-style: disc;
+         }
+          #cookie-details-popup a {
+             color: var(--primary-color); /* Zawsze żółty */
+             text-decoration: underline;
+          }
+          #cookie-details-popup a:hover {
+             color: var(--button-hover-bg); /* Ciemniejszy żółty */
+          }
+
+
+        #cookie-details-popup button {
+            background-color: var(--separator-color);
+            color: var(--text-color);
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            display: block;
+            margin-top: 20px;
+            margin-left: auto;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+         #cookie-details-popup button:hover {
+             background-color: var(--hover-bg);
+         }
+
+         /* Style for the scrollbar */
+         #cookie-details-popup::-webkit-scrollbar {
+             width: 8px;
+         }
+         #cookie-details-popup::-webkit-scrollbar-track {
+             background: var(--scrollbar-track);
+             border-radius: 10px;
+         }
+         #cookie-details-popup::-webkit-scrollbar-thumb {
+             background: var(--scrollbar-thumb);
+             border-radius: 10px;
+         }
+         #cookie-details-popup::-webkit-scrollbar-thumb:hover {
+             background: var(--scrollbar-thumb-hover); /* Zawsze żółty */
+         }
+
+         /* Body style when overlay is active */
+         body.overlay-active {
+            overflow: hidden;
+         }
+
+
+         /* Media query for smaller screens (cookie popups) */
+        @media (max-width: 600px) {
+            #cookie-consent-popup {
+                width: 95%;
+                bottom: 10px;
+                padding: 20px;
+            }
+             #cookie-details-popup {
+                 width: 95%;
+                 padding: 20px;
+                 max-height: 90vh;
+             }
+            .cookie-buttons {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            #accept-cookie {
+                order: 2;
+                width: 100%;
+                text-align: center;
+            }
+            #learn-more-cookie {
+                 order: 1;
+                 margin-bottom: 5px;
+                 margin-right: 0;
+                 text-align: center;
+            }
+             #cookie-details-popup button {
+                 margin-right: auto;
+                 margin-left: auto;
+             }
+        }
+
+
+        /* Theme Switcher Styling */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 101;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
+        }
+
+        .theme-switch input { display: none; }
+
+        .slider {
+            background-color: #555;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+             overflow: hidden;
+        }
+
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+            z-index: 2;
+        }
+
+        /* ZMIANA: Tło suwaka w light mode */
+         body.light-mode .slider {
+             background-color: #ccc;
+         }
+        /* ZMIANA: Aktywne tło suwaka w light mode (pozostaje żółte) */
+         input:checked + .slider {
+             background-color: var(--primary-color); /* Zawsze żółte */
+         }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .slider.round { border-radius: 34px; }
+        .slider.round:before { border-radius: 50%; }
+
+        .theme-switch .icon {
+             position: absolute;
+             top: 50%;
+             transform: translateY(-50%);
+             font-size: 18px;
+             transition: opacity 0.4s ease;
+             z-index: 1;
+             color: #f0f0f0;
+        }
+         body.light-mode .theme-switch .icon {
+             color: #333;
+         }
+
+
+        .theme-switch .moon {
+            left: 8px;
+            opacity: 1;
+        }
+        .theme-switch .sun {
+            right: 8px;
+            opacity: 0;
+        }
+
+        input:checked + .slider .moon { opacity: 0; }
+        input:checked + .slider .sun { opacity: 1; }
+
+         /* Notification Styling */
+         .notification {
+             position: fixed;
+             bottom: 20px;
+             left: 50%;
+             transform: translateX(-50%);
+             background-color: var(--offer-bg);
+             color: var(--text-color);
+             padding: 10px 20px;
+             border-radius: 5px;
+             z-index: 1000;
+             opacity: 0;
+             visibility: hidden;
+             transition: opacity 0.3s ease, visibility 0.3s ease, bottom 0.3s ease;
+             font-size: 0.9em;
+             text-align: center;
+             box-shadow: 0 4px 10px var(--shadow-color);
+             border: 1px solid var(--offer-border);
+         }
+         .notification.show {
+             opacity: 1;
+             visibility: visible;
+             bottom: 30px;
+         }
+
+         /* Media query for smaller screens (theme switch & notification) */
+         @media (max-width: 768px) {
+             .theme-switch-wrapper {
+                 top: 15px;
+                 right: 15px;
+                 transform: none;
+             }
+             .notification {
+                 bottom: 10px;
+                 width: 90%;
+                 max-width: 300px;
+                 padding: 8px 15px;
+             }
+              .notification.show {
+                 bottom: 20px;
+              }
+         }
+         @media (max-width: 480px) {
+             .theme-switch-wrapper {
+                 top: 10px;
+                 right: 10px;
+             }
+             .theme-switch { height: 30px; width: 50px; }
+             .slider:before { height: 22px; width: 22px; }
+             input:checked + .slider:before { transform: translateX(20px); }
+             .theme-switch .icon { font-size: 15px; }
+             .theme-switch .moon { left: 6px; }
+             .theme-switch .sun { right: 6px; }
+         }
+</style>
 </head>
 <body>
 
     <header>
-        <h1>EasyMoney</h1> </header>
+        <h1>EasyMoney</h1>
+        <img src="EasyMoney.png" alt="EasyMoney Logo" class="header-logo">
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round">
+                        <span class="icon moon">🌙</span>
+                        <span class="icon sun">☀️</span>
+                    </div>
+                </label>
+            </div>
+    </header>
 
     <nav>
         <ul>
@@ -347,14 +1035,15 @@
                 </div>
             </li>
             <li><a href="#" onclick="showContent('about-us-section'); return false;">O nas</a></li>
-            <li><a href="#" onclick="showContent('contact-section'); return false;">Kontakt</a></li> </ul>
+            <li><a href="#" onclick="showContent('contact-section'); return false;">Kontakt</a></li>
+        </ul>
     </nav>
 
     <main>
-        <section class="content-section" id="welcome-section" style="display: block;">
-            <h2>Witaj w EasyMoney!</h2> <p>Oferujemy szeroki zakres usług bankowych, dopasowanych do Twoich potrzeb. Wybierz kategorię z menu powyżej, aby zobaczyć szczegółowe oferty.</p>
-             </section>
-
+        <section class="content-section" id="welcome-section">
+            <h2>Witaj w EasyMoney!</h2>
+            <p>Oferujemy szeroki zakres usług bankowych, dopasowanych do Twoich potrzeb. Wybierz kategorię z menu powyżej, aby zobaczyć szczegółowe oferty lub dowiedzieć się więcej o nas.</p>
+        </section>
 
         <section class="content-section offers-section" id="kredyt-gotówkowy-offers">
             <h3>Oferty Kredytów Gotówkowych</h3>
@@ -438,10 +1127,10 @@
             </div>
         </section>
 
-         <section class="content-section offers-section" id="kredyty-samochodowe-offers">
+        <section class="content-section offers-section" id="kredyty-samochodowe-offers">
             <h3>Oferty Kredytów Samochodowych</h3>
-            <p>Przepraszamy, obecnie brak ofert kredytów samochodowych. Prosimy sprawdzić później.</p>
-             </section>
+            <p style="text-align: center;">Przepraszamy, obecnie brak ofert kredytów samochodowych. Prosimy sprawdzić później.</p>
+         </section>
 
         <section class="content-section offers-section" id="chwilowki-offers">
             <h3>Oferty Chwilówek</h3>
@@ -537,7 +1226,7 @@
              </div>
         </section>
 
-         <section class="content-section offers-section" id="konta-osobiste-offers">
+        <section class="content-section offers-section" id="konta-osobiste-offers">
             <h3>Oferty Kont Osobistych</h3>
              <div class="offer">
                 <div class="offer-description">
@@ -576,7 +1265,7 @@
              </div>
         </section>
 
-         <section class="content-section offers-section" id="karty-kredytowe-offers">
+        <section class="content-section offers-section" id="karty-kredytowe-offers">
             <h3>Oferty Kart Kredytowych</h3>
              <div class="offer">
                 <div class="offer-description">
@@ -622,46 +1311,34 @@
              </div>
         </section>
 
-
         <section class="content-section full-details-section" id="wonga-full-details">
-             <span class="back-to-offers" onclick="showContent('chwilowki-offers');">← Powrót do ofert chwilówek</span>
-
+             <span class="back-to-offers" onclick="showContent('chwilowki-offers'); return false;">← Powrót do ofert chwilówek</span>
              <h2>Wonga - Szczegółowy opis oferty</h2>
-
-             <h2>O firmie Wonga</h2>
+             <h3>O firmie Wonga</h3>
             <p>Wonga jest znaną firmą pożyczkową, o <strong>ugruntowanej pozycji na polskim rynku pozabankowym</strong>. Oferuje szybkie pożyczki online. Wonga ma w ofercie jednak coś więcej niż tylko chwilówki, ponieważ jest gotowa udzielić też <strong>pożyczek ratalnych na 60 miesięcy</strong>, co powoduje, że jej oferta staje się realną konkurencją dla kredytów bankowych.</p>
             <p>Firma Wonga to spółka z ograniczoną odpowiedzialnością z siedzibą w Warszawie, zarejestrowana w Rejestrze Przedsiębiorców Krajowego Rejestru Sądowego prowadzonego przez Sąd Rejonowy dla m. st. Warszawy w Warszawie.</p>
             <p>Marka Wonga jest własnością brytyjskiego przedsiębiorstwa, które oferuje pożyczki krótkoterminowe. Pierwsza strona Wonga.com powstała w 2007 roku w Wielkiej Brytanii. <strong>W Polsce Wonga rozpoczęła działalność w kwietniu 2013 roku</strong> i od początku firma ta celowała w segment mikropożyczek. Z czasem jednak poszerzyła swoją ofertę pożyczkową o zobowiązania ratalne.</p>
-
-            <h2>Pożyczki online w Wonga</h2>
+            <h3>Pożyczki online w Wonga</h3>
             <p>Wonga.pl pozwala na zaciąganie <strong>pożyczek chwilówek i pożyczek ratalnych przez internet, bez konieczności wychodzenia z domu</strong>. Dlatego w Wondze dobranie pożyczki do własnych potrzeb i wymagań jest dużo prostsze niż w firmach pożyczkowych, które mają w ofercie tylko niskokwotowe pożyczki.</p>
             <p>Jako jeden z pierwszych pożyczkodawców, Wonga udziela pożyczek dopiero po skontrolowaniu historii kredytowania klienta w <strong>Biurze Informacji Kredytowej (BIK)</strong>. Jeśli klienta interesuje szybka pożyczka, Wonga także jej udzieli, ale nie zrezygnuje ze sprawdzenia danych klienta w dostępnych bazach danych – w BIK-u i w BIG-ach (biurach informacji gospodarczej). Z uwagi na fakt, że <strong>wszystkie formalności można załatwić online</strong>, pożyczka w Wondze dostępna jest w stosunkowo krótkim czasie.</p>
-
-            <h2>Zakres kwot i okres spłaty</h2>
+            <p>Jako jeden z pierwszych pożyczkodawców, Wonga udziela pożyczek dopiero po skontrolowaniu historii kredytowania klienta w <strong>Biurze Informacji Kredytowej (BIK)</strong>. Jeśli klienta interesuje szybka pożyczka, Wonga także jej udzieli, ale nie zrezygnuje ze sprawdzenia danych klienta w dostępnych bazach danych – w BIK-u i w BIG-ach (biurach informacji gospodarczej). Z uwagi na fakt, że <strong>wszystkie formalności można załatwić online</strong>, pożyczka w Wondze dostępna jest w stosunkowo krótkim czasie.</p>
+            <h3>Zakres kwot i okres spłaty</h3>
              <p>W Wondze można dobrać pożyczkę, ponieważ firma ta udziela pożyczek krótkoterminowych i ratalnych w szerokim przedziale kwotowym. Jeśli interesuje nas <strong>krótkoterminowa pożyczka, Wonga udzieli jej w kwocie od 50 zł do 1500 zł</strong>. Natomiast <strong>pożyczki ratalne udzielane są w kwocie nawet do 20 000 zł</strong>.</p>
              <p>Okres spłaty pożyczek krótkoterminowych wynosi <strong>od 1 do 60 dni</strong>, a pożyczek ratalnych – <strong>do 60 miesięcy</strong>.</p>
-
-            <h2>Koszty i proces wnioskowania</h2>
+            <h3>Koszty i proces wnioskowania</h3>
             <p>Klienci od razu informowani są o <strong>wszystkich kosztach</strong> i konsekwencjach zaciągnięcia pożyczki. Oprocentowanie pożyczki w Wondze jest konkurencyjne i już na etapie wnioskowania o takie zobowiązanie klient wie, ile za pożyczkę zapłaci.</p>
             <p><strong>Koszt pierwszej pożyczki krótkoterminowej Wonga dla nowych klientów jest stały</strong>, a koszt kolejnej zależy od indywidualnej oceny zdolności kredytowej klienta i terminowego regulowania zobowiązań. Proces wnioskowania i weryfikacji wniosku pożyczkowego jest <strong>zautomatyzowany</strong>. Udzielenie pierwszej pożyczki na konto klienta odbywa się w 100 proc. w trybie online. W większości przypadków klient <strong>nie musi dosyłać dokumentów</strong>.</p>
-
         </section>
 
          <section class="content-section full-details-section" id="smartney-full-details">
-             <span class="back-to-offers" onclick="showContent('pozyczki-offers');">← Powrót do ofert pożyczek</span>
-
+             <span class="back-to-offers" onclick="showContent('pozyczki-offers'); return false;">← Powrót do ofert pożyczek</span>
              <h2>Smartney - Szczegółowy opis oferty</h2>
-
              <p>Smartney stale współpracuje z wieloma partnerami technologicznymi, którzy pozwalają unowocześnić proces starania się o pieniądze. Dzięki nim jest on <strong>bardzo wygodny, szybki i prosty</strong>. O pożyczki możesz ubiegać się z poziomu nie tylko Twojego komputera, ale nawet smartfona. Wniosek złożysz więc skutecznie <strong>bez wstawania z kanapy</strong>.</p>
-
-            <h2>Komunikacja ze Smartney</h2>
+            <h3>Komunikacja ze Smartney</h3>
             <p>Kontakt nawiążesz bardzo łatwo w najwygodniejszy dla Ciebie sposób. Możesz skorzystać z <strong>infolinii lub chatu</strong>. Możesz też wykorzystać formularz na stronie internetowej lub napisać bezpośrednio na mail do Smartney. Godziny otwarcia są długie, więc z pewnością uda Ci się dopasować odpowiednie do Twoich preferencji. Firma działa <strong>od poniedziałku do piątku od 8:00 do 21:00, a także w soboty oraz niedziele od 9:00 do 16:00</strong>.</p>
-
-            <h2>Opinie i zalety pożyczek w Smartney</h2>
             <p>Czy warto pożyczać w Smartney pożyczki? <strong>Opinie o firmie są bardzo atrakcyjne</strong>, dlatego z pewnością warto wziąć tę ofertę pod uwagę. Wiele elementów wyróżnia ją spośród konkurencyjnych propozycji.</p>
             <p>Jest <strong>prosta w obsłudze, przyznawana na długi czas, a przede wszystkim oferuje wysoką kwotę maksymalną</strong>. Jeśli zależy Ci właśnie na takich parametrach pożyczki, jak najbardziej powinieneś zainteresować się tą opcją.</p>
             <p>Tym bardziej że Smartney jest <strong>członkiem Związku Przedsiębiorstw Finansowych</strong>, który działa zgodnie z Zasadami Dobrych Praktyk.</p>
-
         </section>
 
         <section class="content-section" id="about-us-section">
@@ -674,44 +1351,332 @@
             <p>Zapraszamy do korzystania z naszej wyszukiwarki i porównywarki ofert. Jeśli masz pytania, skontaktuj się z nami!</p>
         </section>
 
-         <section class="content-section" id="contact-section">
+        <section class="content-section" id="contact-section">
              <h2>Kontakt</h2>
-             <p>Tutaj będą znajdować się informacje kontaktowe.</p>
+             <p>Jeśli masz pytania dotyczące ofert, działania strony lub chcesz nawiązać współpracę, skontaktuj się z nami:</p>
+             <p><strong>Email:</strong> kontakt@easymoney-example.com (adres przykładowy)</p>
+             <p>Postaramy się odpowiedzieć jak najszybciej.</p>
              </section>
 
-
-        <div class="image-container">
-            <img src="http://googleusercontent.com/image_generation_content/5" alt="Nowoczesna strona banku" style="max-width: 100%; height: auto;">
+        <div class="circular-logo-container">
+            <img src="EasyMoney.png" alt="EasyMoney Logo Circular" class="circular-logo">
         </div>
 
     </main>
 
     <footer>
-        &copy; 2024 EasyMoney
+        &copy; 2024-2025 EasyMoney. Wszelkie prawa zastrzeżone. <br>
+        <small>Prezentowane informacje mają charakter poglądowy i nie stanowią oferty w rozumieniu Kodeksu Cywilnego.</small>
     </footer>
+
+    <div id="loading-overlay">
+        <div class="loader"></div>
+    </div>
+
+    <div id="cookie-overlay"></div>
+    <div id="cookie-consent-popup">
+        <div class="cookie-content-main">
+            <h3>Używamy plików cookies</h3>
+            <p>Nasza strona internetowa wykorzystuje pliki cookies w celu zapewnienia prawidłowego działania, analizy ruchu i personalizacji treści. Klikając "Akceptuję", zgadzasz się na ich użycie.</p>
+            <p class="cookie-credible-text">Twoja prywatność jest dla nas ważna. Stosujemy najwyższe standardy ochrony danych. Więcej informacji znajdziesz w naszej Polityce Prywatności.</p>
+            <div class="cookie-buttons">
+                <a href="#" id="learn-more-cookie">Dowiedz się więcej</a>
+                <button id="accept-cookie" disabled>Akceptuję</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cookie-details-popup">
+        <div class="cookie-details-content">
+            <h4>Szczegóły dotyczące plików cookies</h4>
+            <p>Pliki cookies to małe pliki tekstowe przechowywane na Twoim urządzeniu podczas przeglądania stron internetowych. Służą do zapamiętywania Twoich preferencji, utrzymywania sesji logowania, dostarczania spersonalizowanych treści oraz zbierania anonimowych danych statystycznych. Dzięki nim możemy stale ulepszyć naszą stronę i lepiej dopasować ją do potrzeb użytkowników.</p>
+            <p>Wykorzystujemy różne rodzaje plików cookies:</p>
+            <ul>
+                <li><strong>Niezbędne:</strong> Kluczowe dla prawidłowego funkcjonowania strony i zapewnienia bezpieczeństwa.</li>
+                <li><strong>Analityczne:</strong> Pomagają nam zrozumieć, jak użytkownicy korzystają ze strony, co pozwala nam ją zoptymalizować. Dane są anonimowe.</li>
+                <li><strong>Marketingowe:</strong> Pozwalają na dostarczanie bardziej trafnych reklam i mierzenie ich skuteczności. Wymagają Twojej zgody.</li>
+            </ul>
+            <p>Masz pełną kontrolę nad plikami cookies. Możesz w każdej chwili zmienić ustawienia przeglądarki, aby zablokować lub usunąć pliki cookies. Pamiętaj jednak, że wyłączenie niektórych rodzajów cookies może wpłynąć na funkcjonalność strony.</p>
+            <p>Więcej szczegółów na temat gromadzenia i przetwarzania danych znajdziesz w pełnej <a href="#" target="_blank">Polityce Prywatności</a> (link do przykładowej polityki).</p>
+            <button id="close-cookie-details">Zamknij</button>
+        </div>
+    </div>
+
+     <div class="notification" id="notification">
+        <span id="notification-message"></span>
+     </div>
+
 
     <script>
         // Funkcja do pokazywania konkretnej sekcji treści i ukrywania pozostałych
+        // Ta funkcja jest wywoływana przez atrybuty onclick w linkach nawigacji
         function showContent(sectionId) {
-            // Ukryj wszystkie sekcje treści (te z klasą .content-section)
+            // console.log('Showing content:', sectionId); // Log dla debugowania (opcjonalny)
+            // Ukryj wszystkie sekcje treści (te z klasą .content-section), usuwając klasę widoczności
             const contentSections = document.querySelectorAll('.content-section');
             contentSections.forEach(section => {
-                section.style.display = 'none';
+                section.classList.remove('is-visible');
+                section.style.display = 'none'; // Szybkie ukrycie po usunięciu klasy
             });
 
-            // Pokaż tylko sekcję o danym ID
+            // Pokaż tylko sekcję o danym ID, dodając klasę widoczności po małym opóźnieniu
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
-                targetSection.style.display = 'block';
+                targetSection.style.display = 'block'; // Pokazujemy element (widoczny ale przezroczysty)
+                setTimeout(() => {
+                    targetSection.classList.add('is-visible'); // Dodajemy klasę uruchamiającą animację
+                }, 10); // Krótkie opóźnienie, by przeglądarka zarejestrowała display: block
+            } else {
+                console.warn('Target section not found:', sectionId); // Ostrzeżenie jeśli sekcja nie istnieje
             }
-             // Przewiń do góry strony, żeby sekcja była w pełni widoczna
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Przewiń do góry strony, żeby sekcja była w pełni widoczna
+             if (window.scrollY !== 0) { // Przewijaj tylko jeśli nie jesteśmy już na górze
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+             }
         }
 
-         // Domyślnie pokaż sekcję powitalną przy ładowaniu strony
-         document.addEventListener('DOMContentLoaded', () => {
+        // Logika uruchamiana po załadowaniu całej struktury DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const cookieOverlay = document.getElementById('cookie-overlay');
+            const cookieConsentPopup = document.getElementById('cookie-consent-popup');
+            const cookieDetailsPopup = document.getElementById('cookie-details-popup');
+            const acceptCookieButton = document.getElementById('accept-cookie');
+            const learnMoreCookieLink = document.getElementById('learn-more-cookie');
+            const closeCookieDetailsButton = document.getElementById('close-cookie-details');
+            const mainContent = document.querySelector('main');
+            const themeToggle = document.getElementById('checkbox');
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notification-message');
+
+            // --- Theme Switcher ---
+            function setTheme(theme, showNotif = false) {
+                let message = '';
+                if (theme === 'light') {
+                    document.body.classList.add('light-mode');
+                    localStorage.setItem('theme', 'light');
+                    if(themeToggle) themeToggle.checked = true;
+                    message = 'Zmieniono motyw na jasny.';
+                } else {
+                    document.body.classList.remove('light-mode');
+                    localStorage.setItem('theme', 'dark');
+                    if(themeToggle) themeToggle.checked = false;
+                    message = 'Zmieniono motyw na ciemny.';
+                }
+                 if(showNotif) showNotification(message);
+            }
+
+            function showNotification(message) {
+                 if(notification && notificationMessage) {
+                    notificationMessage.textContent = message;
+                    notification.classList.add('show');
+                    // Usuń klasę po zakończeniu animacji + dodatkowy czas
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 3000); // Czas widoczności notyfikacji
+                 }
+            }
+
+            // Ustaw motyw przy ładowaniu strony (bez notyfikacji)
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                setTheme(savedTheme, false);
+            } else {
+                setTheme('dark', false); // Domyślny motyw ciemny
+            }
+
+            // Zmień motyw przy kliknięciu przełącznika (z notyfikacją)
+            if(themeToggle) {
+                themeToggle.addEventListener('change', () => {
+                    setTheme(themeToggle.checked ? 'light' : 'dark', true);
+                });
+            }
+
+
+            // --- Loader ---
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'flex'; // Pokaż loader
+                setTimeout(() => {
+                    loadingOverlay.style.opacity = 0; // Zacznij znikanie
+                    loadingOverlay.addEventListener('transitionend', () => {
+                        loadingOverlay.style.display = 'none'; // Ukryj po zakończeniu animacji
+                    }, { once: true }); // Listener jednorazowy
+
+                    // --- Cookie Consent Timer (uruchamiany PO zniknięciu loadera) ---
+                    // Sprawdź, czy zgoda na ciasteczka nie została już udzielona
+                    if (!localStorage.getItem('cookieAccepted') && cookieOverlay && cookieConsentPopup) {
+                        setTimeout(() => { // Opóźnienie przed pokazaniem popupa cookie
+                            cookieOverlay.style.display = 'block'; // Pokaż tło
+                            document.body.classList.add('overlay-active'); // Zablokuj scrollowanie tła
+                            setTimeout(() => { // Małe opóźnienie dla płynności
+                                cookieOverlay.style.opacity = 1; // Pokaż tło płynnie
+                                cookieConsentPopup.style.display = 'block'; // Przygotuj popup
+                                setTimeout(() => { // Małe opóźnienie dla płynności
+                                    cookieConsentPopup.style.opacity = 1;
+                                    cookieConsentPopup.style.transform = 'translateX(-50%) translateY(0)'; // Wsuń popup
+
+                                    // Sprawdź od razu, czy treść jest krótsza niż viewport
+                                    // Jeśli tak, odblokuj przycisk akceptacji
+                                    if (mainContent && mainContent.scrollHeight <= mainContent.clientHeight) {
+                                         enableAcceptButton();
+                                    }
+
+                                }, 50);
+                            }, 50);
+                        }, 1000); // Opóźnienie (w ms) po zniknięciu loadera, przed pokazaniem cookie popup
+                    }
+
+                }, 500); // Czas widoczności loadera (w ms)
+            } else {
+                 // Jeśli nie ma loadera, sprawdź od razu ciasteczka
+                 if (!localStorage.getItem('cookieAccepted') && cookieOverlay && cookieConsentPopup) {
+                      // Pokaż popup od razu (lub z małym opóźnieniem)
+                       setTimeout(() => {
+                            cookieOverlay.style.display = 'block';
+                            document.body.classList.add('overlay-active');
+                            setTimeout(() => {
+                                cookieOverlay.style.opacity = 1;
+                                cookieConsentPopup.style.display = 'block';
+                                setTimeout(() => {
+                                    cookieConsentPopup.style.opacity = 1;
+                                    cookieConsentPopup.style.transform = 'translateX(-50%) translateY(0)';
+                                    if (mainContent && mainContent.scrollHeight <= mainContent.clientHeight) {
+                                         enableAcceptButton();
+                                    }
+                                }, 50);
+                            }, 50);
+                       }, 500); // Małe opóźnienie dla estetyki
+                 }
+            }
+
+
+            // --- Cookie Consent Logic ---
+            let hasScrolledToBottom = false;
+
+            // Funkcja do odblokowania przycisku akceptacji
+            function enableAcceptButton() {
+                 if (acceptCookieButton && !acceptCookieButton.classList.contains('enabled')) {
+                    acceptCookieButton.disabled = false;
+                    acceptCookieButton.classList.add('enabled');
+                    // acceptCookieButton.style.cursor = 'pointer'; // Styl :enabled w CSS powinien to obsłużyć
+                    hasScrolledToBottom = true; // Oznacz jako odblokowany
+                 }
+            }
+
+            // Nasłuchuj scrollowania w głównym kontenerze treści
+            if (mainContent) {
+                mainContent.addEventListener('scroll', () => {
+                    // Jeśli nie odblokowano jeszcze i użytkownik doscrollował do dołu (z marginesem)
+                    if (!hasScrolledToBottom && mainContent.scrollTop + mainContent.clientHeight >= mainContent.scrollHeight - 10) {
+                        enableAcceptButton();
+                    }
+                });
+            }
+
+            // Obsługa linku "Dowiedz się więcej"
+            if (learnMoreCookieLink && cookieDetailsPopup) {
+                learnMoreCookieLink.addEventListener('click', (e) => {
+                    e.preventDefault(); // Zapobiegaj przejściu do '#'
+                    cookieDetailsPopup.style.display = 'block'; // Pokaż popup (ukryty przez opacity/transform)
+                    setTimeout(() => { // Małe opóźnienie dla animacji
+                        cookieDetailsPopup.style.opacity = 1;
+                        cookieDetailsPopup.style.transform = 'translate(-50%, -50%) scale(1)'; // Animuj pokazanie
+                    }, 50);
+                });
+            }
+
+            // Obsługa przycisku "Zamknij" w szczegółach cookie
+            if (closeCookieDetailsButton && cookieDetailsPopup) {
+                closeCookieDetailsButton.addEventListener('click', () => {
+                    cookieDetailsPopup.style.opacity = 0; // Ukryj płynnie
+                    cookieDetailsPopup.style.transform = 'translate(-50%, -50%) scale(0.9)'; // Animuj ukrywanie
+                    // Po zakończeniu animacji ukryj element całkowicie
+                    cookieDetailsPopup.addEventListener('transitionend', () => {
+                        cookieDetailsPopup.style.display = 'none';
+                    }, { once: true });
+                });
+            }
+
+            // Obsługa przycisku "Akceptuję"
+            if (acceptCookieButton) {
+                acceptCookieButton.addEventListener('click', () => {
+                    // Sprawdź, czy przycisk jest aktywny
+                    if (acceptCookieButton.classList.contains('enabled')) {
+                        // Ukryj popup zgody
+                        if (cookieConsentPopup) {
+                            cookieConsentPopup.style.opacity = 0;
+                            cookieConsentPopup.style.transform = 'translateX(-50%) translateY(20px)'; // Animuj ukrywanie
+                            cookieConsentPopup.addEventListener('transitionend', () => {
+                                cookieConsentPopup.style.display = 'none';
+                            }, { once: true });
+                        }
+                        // Ukryj tło
+                        if (cookieOverlay) {
+                            cookieOverlay.style.opacity = 0;
+                            cookieOverlay.addEventListener('transitionend', () => {
+                                cookieOverlay.style.display = 'none';
+                                document.body.classList.remove('overlay-active'); // Odblokuj scrollowanie tła
+                            }, { once: true });
+                        }
+                         // Zamknij również szczegóły, jeśli były otwarte
+                         if (cookieDetailsPopup && cookieDetailsPopup.style.display === 'block') {
+                            closeCookieDetailsButton.click(); // Symuluj kliknięcie zamknięcia
+                         }
+
+                        // Zapisz zgodę w localStorage
+                        localStorage.setItem('cookieAccepted', 'true');
+                    }
+                });
+            }
+
+            // --- Mobile Dropdown Logic ---
+            const dropdownLinks = document.querySelectorAll('nav li.dropdown > a');
+            dropdownLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    // Sprawdź szerokość okna tylko przy kliknięciu
+                    if (window.innerWidth <= 768) {
+                        const parentLi = this.parentElement;
+                        const isOpen = parentLi.classList.contains('show-dropdown');
+
+                        // Zamknij wszystkie inne otwarte dropdowny na mobile
+                        document.querySelectorAll('nav li.dropdown.show-dropdown').forEach(item => {
+                            if (item !== parentLi) {
+                                item.classList.remove('show-dropdown');
+                            }
+                        });
+
+                        // Przełącz (otwórz/zamknij) kliknięty dropdown
+                        parentLi.classList.toggle('show-dropdown');
+
+                        // Zapobiegaj domyślnej akcji (np. wywołaniu showContent) dla GŁÓWNEGO linku na mobile
+                        event.preventDefault();
+                    }
+                    // Na większych ekranach (> 768px), atrybut onclick="showContent(...)" zadziała normalnie,
+                    // a hover CSS pokaże dropdown. Nie trzeba tu nic robić.
+                });
+            });
+
+            // Zamykanie mobilnego dropdownu po kliknięciu linku WEWNĄTRZ niego
+             const dropdownContentLinks = document.querySelectorAll('.dropdown-content a');
+             dropdownContentLinks.forEach(link => {
+                 link.addEventListener('click', function() {
+                      // Sprawdź szerokość okna przy kliknięciu linku wewnątrz
+                      if (window.innerWidth <= 768) {
+                         const parentDropdown = this.closest('.dropdown');
+                         if (parentDropdown) {
+                             parentDropdown.classList.remove('show-dropdown'); // Zamknij dropdown
+                         }
+                     }
+                     // Funkcja showContent() i tak zostanie wywołana przez atrybut onclick w HTMLu tego linku
+                 });
+             });
+
+            // --- Initial Content Display ---
+            // Pokaż sekcję powitalną na starcie
             showContent('welcome-section');
-         });
+
+        }); // Koniec DOMContentLoaded
     </script>
 
 </body>
